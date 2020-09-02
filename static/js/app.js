@@ -1,5 +1,5 @@
 
-// creat a function to unpack data
+// create a function to unpack data
 function unpack(rows, index) {
     return rows.map(function (row) {
       return row[index];
@@ -8,7 +8,9 @@ function unpack(rows, index) {
 
 
 d3.json("samples.json").then(function(data) {
-    console.log(data);
+    var ids = unpack(data.metadata, "id");
+    console.log(data)
+    console.log(ids);
 });
 
 
