@@ -6,7 +6,8 @@ function unpack(rows, index) {
     });
 }
 
-// read data, collect ids, and load the ids into the dropdown
+// read data, collect ids, and load the ids into the dropdown  //
+
 d3.json("samples.json").then(function (data) {
     var ids = unpack(data.metadata, "id");
     d3.select("#selDataset")
@@ -25,8 +26,18 @@ d3.json("samples.json").then(function (data) {
 
 // ----------------------  //
 
+// Load the Plots and Demographic info as a place holder upon launch of page //
 
-// Call updatePlotly() when a change takes place to the DOM
+
+
+
+
+
+
+// ----------------------  //
+
+// Create and Call function:  updatePlotly()   when a change takes place to the DOM
+
 d3.selectAll("#selDataset").on("change", updatePlotly);
 
 // This function is called when a dropdown menu item is selected
@@ -126,15 +137,14 @@ function updatePlotly() {
         });
 
 
-        var wfreq = dem_data.wfreq;
-        console.log(wfreq)
-
-
-
 
         //  ------------------------  //
 
         // Add the Gauge Chart
+
+        // add var for wash frequency gauge
+        var wfreq = dem_data.wfreq;
+        console.log(wfreq)
 
         var trace3 = {
             domain: { x: [0, 1], y: [0, 1] },
@@ -165,10 +175,5 @@ function updatePlotly() {
         Plotly.newPlot("gauge", data3);
 
     });
-
-    indv_dem_data.text("");
-    
+  
 };
-
-
-
