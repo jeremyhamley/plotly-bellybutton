@@ -20,7 +20,7 @@ d3.json("samples.json").then(function (data) {
 
 
     console.log(data);
-    console.log(ids);
+    // console.log(ids);
 });
 
 
@@ -34,10 +34,7 @@ function updatePlotly() {
     // Assign the value of the dropdown menu option to a variable
     var dataset = dropdownMenu.property("value");
     console.log(dataset)
-    // Initialize x and y arrays
-    var x = [];
-    var y = [];
-    var labels = [];
+
 
 
     //  Pull data for the id selected in the dropdown
@@ -52,7 +49,7 @@ function updatePlotly() {
         console.log(values_sliced);
 
         var labels_sliced = person_id.otu_labels.slice(0, 10);
-        console.log(labels_sliced);
+        // console.log(labels_sliced);
 
 
         var y = otu_ids_sliced.map(function(a){return "OTU ID " + a;});
@@ -72,7 +69,7 @@ function updatePlotly() {
 
         // Define the plot layout
         var layout = {
-            title: "Top 10 Belly Button Bacteria",
+            title: "Top 10 OTUs (Operational Taxonomic Units)",
             xaxis: { title: "Microbe Count" },
             barmode: "group"
         };
@@ -96,6 +93,7 @@ function updatePlotly() {
             x: x2,
             y: y2,
             mode: "markers",
+            text: labels2,
             marker: {
                 color: otu_ids,
                 size: values
@@ -104,21 +102,29 @@ function updatePlotly() {
 
         // Create the data array for the plot
         var data2 = [trace2];
-
         // Define the plot layout
         var layout2 = {
-            title: "Top 10 Belly Button Bacteria",
+            title: "OTUs (Operational Taxonomic Units)",
             xaxis: { title: "OTU ID" },
         };
-
         // Plot the chart to a div tag with id "bubble"
         Plotly.newPlot("bubble", data2, layout2);
 
-
-
-
-
     });
+
+    // Collect data for Demographic Info card
+    d3.json("samples.json").then((data) => {
+        var person_data = data.metadata.filter( ({id}) => id === dataset );
+        console.log(person_data);
+    });
+
+    // // Collect data for Demographic Info card
+    // d3.json("samples.json").then((data) => {
+    //     var person_data = data.metadata.find(({ id }) => id === dataset);
+    //     console.log(person_data);
+    // });
+
+
 
 };
 
