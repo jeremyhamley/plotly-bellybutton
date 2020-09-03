@@ -115,25 +115,22 @@ function updatePlotly() {
 
 
     // Collect data for Demographic Info card
-    datasetInt = parseInt(dataset)
+    dem_dataset = parseInt(dataset)
     d3.json("samples.json").then((data) => {
-        var person_data = data.metadata.find(({ id }) => id === datasetInt);
-        console.log(person_data);
-        var dem_id = person_data.id;
-        var ethn = person_data.ethnicity;
-        var gend = person_data.gender;
-        var age = person_data.age;
-        var loc = person_data.location;
-        var bbt = person_data.bbtype;
-        var wfreq = person_data.wfreq;
-        console.log(dem_id, ethn, gend, age, loc, bbt, wfreq);
+        var dem_data = data.metadata.find(({ id }) => id === dem_dataset);
+
+        var indv_dem_data = d3.select("#sample-metadata");
+        indv_dem_data.text("");
+        Object.entries(dem_data).forEach((key) => {   
+            indv_dem_data.append("h4").text(key[0] + ": " + key[1]);    
+        });
 
 
-        // d3.select("#sample-metadata")
-        //     .selectAll("div")
-        //     .enter()
-        //     .append("div")
-        //     .html(`<h5>Test Subject ID: ${dem_id}</h5>`);
+        var wfreq = dem_data.wfreq;
+        console.log(wfreq)
+
+
+
 
         //  ------------------------  //
 
@@ -168,6 +165,8 @@ function updatePlotly() {
         Plotly.newPlot("gauge", data3);
 
     });
+
+    indv_dem_data.text("");
     
 };
 
