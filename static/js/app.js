@@ -33,18 +33,25 @@ function updatePlotly() {
   var dropdownMenu = d3.select("#selDataset");
   // Assign the value of the dropdown menu option to a variable
   var dataset = dropdownMenu.property("value");
-console.log(dataset)
+  console.log(dataset)
   // Initialize x and y arrays
   var x = [];
   var y = [];
 
 
+//  Pull data for the id selected in the dropdown
 d3.json("samples.json").then((data) => {
-    console.log(data);
-    var person_id = data.sample.find(({id}) => id === dataset);
+    var person_id = data.samples.find(({id}) => id === dataset);
     console.log(person_id);
+    // store the top 10 values for the bar chart
+    var values_sliced = person_id.sample_values.slice(0,10);
+    console.log(values_sliced);
 
-
+    var values_sliced = person_id.sample_values.slice(0,10);
+    console.log(values_sliced);
+    
+    var y = values_sliced;
+    
 });
 
 };
