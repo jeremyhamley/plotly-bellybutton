@@ -23,6 +23,8 @@ d3.json("samples.json").then(function (data) {
     // console.log(ids);
 });
 
+// ----------------------  //
+
 
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("#selDataset").on("change", updatePlotly);
@@ -138,28 +140,28 @@ function updatePlotly() {
         // Add the Gauge Chart
 
         var trace3 = {
-            x: x,
-            y: y,
-            type: "bar",
-            text: labels,
-            orientation: "h"
-        };
+            domain: { x: [0, 1], y: [0, 1] },
+            value: wfreq,
+            title: { text: "Belly Button Scrubs per Week" },
+            type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                axis: {range: [null,9], tickwidth: 5},
+                bar: { color: "blue" },
 
+            }
+        };
         // Create the data array for the plot
         var data3 = [trace3];
-
         // Define the plot layout
-        var layout3 = {
-            title: "Belly Button Scrubs per Week"
-        };
-
+        // var layout3 = {
+        //     title: "Belly Button Scrubs per Week"
+        // };
         // Plot the chart to a div tag with id "bar"
-        Plotly.newPlot("gauge", data3, layout3);
-
+        Plotly.newPlot("gauge", data3);
 
     });
     
-
 };
 
 
