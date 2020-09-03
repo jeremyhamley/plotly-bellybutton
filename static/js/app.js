@@ -114,10 +114,13 @@ function updatePlotly() {
 
     // Collect data for Demographic Info card
     d3.json("samples.json").then((data) => {
-        var person_data = data.metadata[0];
+        var person_data = data.metadata[50];
         console.log(person_data);
+        console.log(person_data.age);
+        console.log(person_data.id);
     });
 
+    
     // // Collect data for Demographic Info card
     // d3.json("samples.json").then((data) => {
     //     var person_data = data.metadata.find(({ id }) => id === dataset);
