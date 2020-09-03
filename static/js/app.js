@@ -36,7 +36,6 @@ function updatePlotly() {
     console.log(dataset)
 
 
-
     //  Pull data for the id selected in the dropdown
     d3.json("samples.json").then((data) => {
         var person_id = data.samples.find(({ id }) => id === dataset);
@@ -52,8 +51,8 @@ function updatePlotly() {
         // console.log(labels_sliced);
 
 
-        var y = otu_ids_sliced.map(function(a){return "OTU ID " + a;});
-        var x = values_sliced.sort((a,b) => a-b);
+        var y = otu_ids_sliced.map(function (a) { return "OTU ID " + a; });
+        var x = values_sliced.sort((a, b) => a - b);
         var labels = labels_sliced;
 
         var trace1 = {
@@ -97,7 +96,7 @@ function updatePlotly() {
             marker: {
                 color: otu_ids,
                 size: values
-            }         
+            }
         };
 
         // Create the data array for the plot
@@ -118,9 +117,50 @@ function updatePlotly() {
     d3.json("samples.json").then((data) => {
         var person_data = data.metadata.find(({ id }) => id === datasetInt);
         console.log(person_data);
-        
-    });
+        var dem_id = person_data.id;
+        var ethn = person_data.ethnicity;
+        var gend = person_data.gender;
+        var age = person_data.age;
+        var loc = person_data.location;
+        var bbt = person_data.bbtype;
+        var wfreq = person_data.wfreq;
+        console.log(dem_id, ethn, gend, age, loc, bbt, wfreq);
 
+
+        // d3.select("#sample-metadata")
+        //     .selectAll("div")
+        //     .enter()
+        //     .append("div")
+        //     .html(`<h5>Test Subject ID: ${dem_id}</h5>`);
+
+        //  ------------------------  //
+
+        // Add the Gauge Chart
+
+        var trace3 = {
+            x: x,
+            y: y,
+            type: "bar",
+            text: labels,
+            orientation: "h"
+        };
+
+        // Create the data array for the plot
+        var data3 = [trace3];
+
+        // Define the plot layout
+        var layout3 = {
+            title: "Belly Button Scrubs per Week"
+        };
+
+        // Plot the chart to a div tag with id "bar"
+        Plotly.newPlot("gauge", data3, layout3);
+
+
+    });
+    
 
 };
+
+
 
