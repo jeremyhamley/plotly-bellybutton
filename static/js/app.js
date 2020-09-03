@@ -55,13 +55,16 @@ function updatePlotly() {
         console.log(labels_sliced);
 
 
-        var x = otu_ids_sliced.map(function(a){return "OTU ID " + a;});
-        var y = values_sliced;
+        var y = otu_ids_sliced.map(function(a){return "OTU ID " + a;});
+        var x = values_sliced.sort((a,b) => a-b);
+        var labels = labels_sliced;
 
         var trace1 = {
             x: x,
             y: y,
-            type: "bar"
+            type: "bar",
+            text: labels,
+            orientation: "h"
         };
 
         // Create the data array for the plot
@@ -70,13 +73,50 @@ function updatePlotly() {
         // Define the plot layout
         var layout = {
             title: "Top 10 Belly Button Bacteria",
-            xaxis: { title: "OTU ID" },
-            yaxis: { title: "Microbe Count" },
+            xaxis: { title: "Microbe Count" },
             barmode: "group"
         };
 
         // Plot the chart to a div tag with id "bar"
         Plotly.newPlot("bar", data1, layout);
+
+
+        // --------------------------//
+
+        // Collect data for Bubble chart
+        var otu_ids = person_id.otu_ids;
+        var values = person_id.sample_values;
+        var labels = person_id.otu_labels;
+
+        var x2 = otu_ids;
+        var y2 = values;
+        var labels2 = labels;
+
+        var trace2 = {
+            x: x2,
+            y: y2,
+            mode: "markers",
+            marker: {
+                color: otu_ids,
+                size: values
+            }         
+        };
+
+        // Create the data array for the plot
+        var data2 = [trace2];
+
+        // Define the plot layout
+        var layout2 = {
+            title: "Top 10 Belly Button Bacteria",
+            xaxis: { title: "OTU ID" },
+        };
+
+        // Plot the chart to a div tag with id "bubble"
+        Plotly.newPlot("bubble", data2, layout2);
+
+
+
+
 
     });
 
