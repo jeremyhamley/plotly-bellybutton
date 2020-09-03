@@ -147,7 +147,14 @@ function updatePlotly() {
             mode: "gauge+number",
             gauge: {
                 axis: {range: [null,9], tickwidth: 5},
-                bar: { color: "blue" },
+                bar: { color: "yellow" },
+                steps: [
+                    { range: [0,2], color: "greenyellow"},
+                    { range: [2,4], color: "lightgreen"},
+                    { range: [4,6], color: "green"},
+                    { range: [6,8], color: "darkgreen"},
+                    { range: [8,9], color: "greenblue"},
+                ]
 
             }
         };
