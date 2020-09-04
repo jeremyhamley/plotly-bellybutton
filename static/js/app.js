@@ -23,7 +23,6 @@ d3.json("samples.json").then(function (data) {
 
     console.log(data);
     updatePlotly();
-    // console.log(ids);
 });
 
 // ----------------------------------------------------  //
