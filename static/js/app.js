@@ -6,6 +6,7 @@ function unpack(rows, index) {
     });
 }
 
+
 // read data, collect ids, and load the ids into the dropdown  //
 
 d3.json("samples.json").then(function (data) {
@@ -21,10 +22,11 @@ d3.json("samples.json").then(function (data) {
 
 
     console.log(data);
+    updatePlotly();
     // console.log(ids);
 });
 
-// ----------------------  //
+// ----------------------------------------------------  //
 
 // Load the Plots and Demographic info as a place holder upon launch of page //
 
@@ -34,9 +36,9 @@ d3.json("samples.json").then(function (data) {
 
 
 
-// ----------------------  //
+// ----------------------------------------------------  //
 
-// Create and Call function:  updatePlotly()   when a change takes place to the DOM
+// Create and Call function:  updatePlotly() when a change takes place to the DOM //
 
 d3.selectAll("#selDataset").on("change", updatePlotly);
 
@@ -49,7 +51,9 @@ function updatePlotly() {
     console.log(dataset)
 
 
-    //  Pull data for the id selected in the dropdown
+    // ----------------------------------------------------  //
+    //  Pull data for the id selected in the dropdown //
+
     d3.json("samples.json").then((data) => {
         var person_id = data.samples.find(({ id }) => id === dataset);
         console.log(person_id);
@@ -63,6 +67,10 @@ function updatePlotly() {
         var labels_sliced = person_id.otu_labels.slice(0, 10);
         // console.log(labels_sliced);
 
+
+
+        // ----------------------------------------------------  //
+        //  Create the bar chart //
 
         var y = otu_ids_sliced.map(function (a) { return "OTU ID " + a; });
         var x = values_sliced.sort((a, b) => a - b);
@@ -90,9 +98,12 @@ function updatePlotly() {
         Plotly.newPlot("bar", data1, layout);
 
 
-        // --------------------------//
 
-        // Collect data for Bubble chart
+
+        // ---------------------------------------------------- //
+        // Collect data for Bubble chart //
+
+
         var otu_ids = person_id.otu_ids;
         var values = person_id.sample_values;
         var labels = person_id.otu_labels;
@@ -112,7 +123,9 @@ function updatePlotly() {
             }
         };
 
-        // Create the data array for the plot
+        // ---------------------------------------------------- //
+        // Create Bubble chart //
+
         var data2 = [trace2];
         // Define the plot layout
         var layout2 = {
@@ -125,7 +138,9 @@ function updatePlotly() {
     });
 
 
-    // Collect data for Demographic Info card
+    // ---------------------------------------------------- //
+    // Collect and display data for Demographic Info card
+
     dem_dataset = parseInt(dataset)
     d3.json("samples.json").then((data) => {
         var dem_data = data.metadata.find(({ id }) => id === dem_dataset);
@@ -138,7 +153,7 @@ function updatePlotly() {
 
 
 
-        //  ------------------------  //
+        //  ----------------------------------------------------  //
 
         // Add the Gauge Chart
 
@@ -167,11 +182,8 @@ function updatePlotly() {
         };
         // Create the data array for the plot
         var data3 = [trace3];
-        // Define the plot layout
-        // var layout3 = {
-        //     title: "Belly Button Scrubs per Week"
-        // };
-        // Plot the chart to a div tag with id "bar"
+
+        // Plot the chart to a div tag with id "gauge"
         Plotly.newPlot("gauge", data3);
 
     });
